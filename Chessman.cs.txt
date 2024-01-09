@@ -1,0 +1,1044 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Chessman : MonoBehaviour
+{
+    // References
+    private GameObject controller;
+    public GameObject movePlate;
+    public GameObject chesspiece;
+    
+
+    // Positions
+    private int xBoard = -4;
+    private int yBoard = 1;
+
+    // Black or white player
+    private string player;
+
+    // References for all the sprites that the chesspiece can be(satranc tasinin olabilecegi her yer)
+    public Sprite _b_at, _b_casus, _b_debbabe, _b_deve, _b_fil, _b_general, _b_kale, _b_sah, _b_vezir, _b_zurafa,
+    
+    b_piyon_at, b_piyon_casus, b_piyon_debbabe, b_piyon_deve, b_piyon_fil, b_piyon_general, b_piyon_kale, b_piyon_piyon, b_piyon_sah, b_piyon_vezir, b_piyon_zurafa;
+    public Sprite _w_at, _w_casus, _w_debbabe, _w_deve, _w_fil, _w_general, _w_kale, _w_sah, _w_vezir, _w_zurafa,
+    
+    w_piyon_at, w_piyon_casus, w_piyon_debbabe, w_piyon_deve, w_piyon_fil, w_piyon_general, w_piyon_kale, w_piyon_piyon, w_piyon_sah, w_piyon_vezir, w_piyon_zurafa;
+   
+
+    public void Activate()
+    {
+        controller = GameObject.FindGameObjectWithTag("GameController");
+
+
+        
+
+        SetCoords();
+        switch (this.name)
+        {
+            case "_b_at": this.GetComponent<SpriteRenderer>().sprite = _b_at; player = "black"; break;
+            case "_b_casus": this.GetComponent<SpriteRenderer>().sprite = _b_casus; player = "black"; break;
+            case "_b_debbabe": this.GetComponent<SpriteRenderer>().sprite = _b_debbabe; player = "black"; break;
+            case "_b_deve": this.GetComponent<SpriteRenderer>().sprite = _b_deve; player = "black"; break;
+            case "_b_fil": this.GetComponent<SpriteRenderer>().sprite = _b_fil; player = "black"; break;
+            case "_b_general": this.GetComponent<SpriteRenderer>().sprite = _b_general; player = "black"; break;
+            case "_b_kale": this.GetComponent<SpriteRenderer>().sprite = _b_kale; player = "black"; break;
+            case "_b_sah": this.GetComponent<SpriteRenderer>().sprite = _b_sah; player = "black"; break;
+            case "_b_vezir": this.GetComponent<SpriteRenderer>().sprite = _b_vezir; player = "black"; break;
+            case "_b_zurafa": this.GetComponent<SpriteRenderer>().sprite = _b_zurafa; player = "black"; break;
+            case "_w_at": this.GetComponent<SpriteRenderer>().sprite = _w_at; player = "white"; break;
+            case "_w_casus": this.GetComponent<SpriteRenderer>().sprite = _w_casus; player = "white"; break;
+            case "_w_debbabe": this.GetComponent<SpriteRenderer>().sprite = _w_debbabe; player = "white"; break;
+            case "_w_deve": this.GetComponent<SpriteRenderer>().sprite = _w_deve; player = "white"; break;
+            case "_w_fil": this.GetComponent<SpriteRenderer>().sprite = _w_fil; player = "white"; break;
+            case "_w_general": this.GetComponent<SpriteRenderer>().sprite = _w_general; player = "white"; break;
+            case "_w_kale": this.GetComponent<SpriteRenderer>().sprite = _w_kale; player = "white"; break;
+            case "_w_sah": this.GetComponent<SpriteRenderer>().sprite = _w_sah; player = "white"; break;
+            case "_w_vezir": this.GetComponent<SpriteRenderer>().sprite = _w_vezir; player = "white"; break;
+            case "_w_zurafa": this.GetComponent<SpriteRenderer>().sprite = _w_zurafa; player = "white"; break;
+
+            
+            case "b_piyon_at": this.GetComponent<SpriteRenderer>().sprite = b_piyon_at; player = "black"; break;
+            case "b_piyon_casus": this.GetComponent<SpriteRenderer>().sprite = b_piyon_casus; player = "black"; break;
+            case "b_piyon_debbabe": this.GetComponent<SpriteRenderer>().sprite = b_piyon_debbabe; player = "black"; break;
+            case "b_piyon_deve": this.GetComponent<SpriteRenderer>().sprite = b_piyon_deve; player = "black"; break;
+            case "b_piyon_fil": this.GetComponent<SpriteRenderer>().sprite = b_piyon_fil; player = "black"; break;
+            case "b_piyon_general": this.GetComponent<SpriteRenderer>().sprite = b_piyon_general; player = "black"; break;
+            case "b_piyon_kale": this.GetComponent<SpriteRenderer>().sprite = b_piyon_kale; player = "black"; break;
+            case "b_piyon_piyon": this.GetComponent<SpriteRenderer>().sprite = b_piyon_piyon; player = "black"; break;
+            case "b_piyon_sah": this.GetComponent<SpriteRenderer>().sprite = b_piyon_sah; player = "black"; break;
+            case "b_piyon_vezir": this.GetComponent<SpriteRenderer>().sprite = b_piyon_vezir; player = "black"; break;
+            case "b_piyon_zurafa": this.GetComponent<SpriteRenderer>().sprite = b_piyon_zurafa; player = "black"; break;
+            case "w_piyon_at": this.GetComponent<SpriteRenderer>().sprite = w_piyon_at; player = "white"; break;
+            case "w_piyon_casus": this.GetComponent<SpriteRenderer>().sprite = w_piyon_casus; player = "white"; break;
+            case "w_piyon_debbabe": this.GetComponent<SpriteRenderer>().sprite = w_piyon_debbabe; player = "white"; break;
+            case "w_piyon_deve": this.GetComponent<SpriteRenderer>().sprite = w_piyon_deve; player = "white"; break;
+            case "w_piyon_fil": this.GetComponent<SpriteRenderer>().sprite = w_piyon_fil; player = "white"; break;
+            case "w_piyon_general": this.GetComponent<SpriteRenderer>().sprite = w_piyon_general; player = "white"; break;
+            case "w_piyon_kale": this.GetComponent<SpriteRenderer>().sprite = w_piyon_kale; player = "white"; break;
+            case "w_piyon_piyon": this.GetComponent<SpriteRenderer>().sprite = w_piyon_piyon; player = "white"; break;
+            case "w_piyon_sah": this.GetComponent<SpriteRenderer>().sprite = w_piyon_sah; player = "white"; break;
+            case "w_piyon_vezir": this.GetComponent<SpriteRenderer>().sprite = w_piyon_vezir; player = "white"; break;
+            case "w_piyon_zurafa": this.GetComponent<SpriteRenderer>().sprite = w_piyon_zurafa; player = "white"; break;
+            
+
+        }
+            
+}
+
+
+    public void SetCoords(){
+        float x = xBoard;
+        float y = yBoard;
+        
+        x*=0.982f;
+        y*=0.98f;
+
+        x +=-5.91f;
+        y += -4.41f;
+
+        this.transform.position = new Vector3(x, y, -3.0f);
+    }
+
+    
+
+    public int GetXBoard()
+    {
+        return xBoard;
+    }
+    public int GetYBoard()
+    {
+        return yBoard;
+    }
+
+    public void SetXBoard(int x)
+    {
+        xBoard = x;
+    }
+    public void SetYBoard(int y)
+    {
+        yBoard = y;
+    }
+
+    private void OnMouseUp() // Oyun bitti ise siler, olusturur.
+    {
+        if(  !controller.GetComponent<Game>().IsGameOver() && controller.GetComponent<Game>().GetCurrentPlayer() == player)
+        {
+            DestroyMovePlates();
+            InstantiateMovePlates();
+        }
+    }
+
+    public void DestroyMovePlates() // Butun hareket plakalarini siler.
+    {
+        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
+        for (int i = 0; i < movePlates.Length; i++)
+        {
+            Destroy(movePlates[i]);
+        }
+    }
+
+    // public void DestroyMovePlateAP() // Butun hareket plakalarini siler.
+    // {
+    //     GameObject movePlateAp = GameObject.FindGameObjectsWithTag("MovePlate");
+        
+    //         Destroy(APawnMovePlate);
+        
+    // }
+    
+
+    public void InstantiateMovePlates() // Hareket plakalarini olusturur.
+    {
+        switch (this.name)
+        {
+            case "_b_at":
+            case "_w_at":
+                AMovePlate();
+                break;
+
+            case "_b_casus":
+            case "_w_casus":
+                CLineMovePlate(1, 1);
+                CLineMovePlate(-1, 1);
+                CLineMovePlate(1, -1);
+                CLineMovePlate(-1, -1);
+                break;
+
+            case "_b_debbabe":
+            case "_w_debbabe":
+                DMovePlate();
+                break;
+
+            case "_b_deve":
+            case "_w_deve":
+                DeMovePlate();
+                break;
+
+            case "_b_fil":
+            case "_w_fil":
+                FMovePlate();
+                break;
+
+            case "_b_general":
+            case "_w_general":
+                GSurroundMovePlate();
+                break;
+
+            case "_b_kale":
+            case "_w_kale":
+                LineMovePlate(1, 0);
+                LineMovePlate(0, 1);
+                LineMovePlate(-1, 0);
+                LineMovePlate(0, -1);
+                break;
+
+            case "_b_sah":
+                BSSurroundMovePlate();
+                break;
+            case "_w_sah":
+                WSSurroundMovePlate();
+                break;
+
+            case "_b_vezir":
+            case "_w_vezir":
+                VSurroundMovePlate();
+                break;
+
+            case "_b_zurafa":
+            case "_w_zurafa":
+                Z1MovePlate(1, 0);
+                Z1MovePlate(0, 1);
+                
+                Z3MovePlate(1, 0);
+                Z3MovePlate(0, 1);
+                
+                Z5MovePlate(1, 0);
+                Z5MovePlate(0, 1);
+                
+                Z7MovePlate(1, 0);
+                Z7MovePlate(0, -1);                
+                
+                Z2MovePlate(0, 1);
+                Z2MovePlate(-1, 0);
+                
+                Z4MovePlate(1, 0);
+                Z4MovePlate(0, -1);
+                
+                Z6MovePlate(-1, 0);
+                Z6MovePlate(0, -1);
+                
+                Z8MovePlate(-1, 0);
+                Z8MovePlate(0, -1);
+                break;
+
+            case "b_piyon_at":
+                APawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_at":
+                APawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_casus":
+                CPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_casus":
+                CPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_debbabe":
+                DPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_debbabe":
+                DPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_deve":
+                DePawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_deve":
+                DePawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_fil":
+                FPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_fil":
+                FPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_general":
+                GPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_general":
+                GPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_kale":
+                KPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_kale":
+                KPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_piyon":
+                PPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_piyon":
+                PPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_sah":
+                SPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_sah":
+                SPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_vezir":
+                VPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_vezir":
+                VPawnMovePlate(xBoard, yBoard - 1);
+                break;
+
+            case "b_piyon_zurafa":
+                ZPawnMovePlate(xBoard, yBoard + 1);
+                break;
+            case "w_piyon_zurafa":
+                ZPawnMovePlate(xBoard, yBoard - 1);
+                break;
+        
+        
+        
+            
+            
+        }
+    }
+
+
+    public void Z1MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x + 1 , y + 1) && sc.GetPosition(x + 1, y + 1) == null &&
+        sc.PositionOnBoard(x + 2, y + 1) && sc.GetPosition(x + 2, y + 1) == null  && sc.PositionOnBoard(x + 3, y + 1) && sc.GetPosition(x + 3, y + 1) == null )
+        
+            {
+                x = xBoard ;
+                
+                    y += 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x + i, y);
+                    if (sc.PositionOnBoard(x+i, y) && sc.GetPosition(x+i,y) != null)
+            {   
+                break;
+            }
+            
+                        }
+                    
+            }
+
+    }
+
+    public void Z2MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x - 1, y + 1) &&  sc.GetPosition(x - 1, y + 1) == null &&
+        sc.PositionOnBoard(x - 2, y + 1) && sc.GetPosition(x - 2, y + 1) == null && sc.PositionOnBoard(x - 3, y + 1) &&  sc.GetPosition(x - 3, y + 1) == null  )
+        
+            {
+
+                x = xBoard ;
+                    y += 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x - i, y);
+                    if (sc.PositionOnBoard(x-i, y) && sc.GetPosition(x-i,y) != null)
+            {   
+                break;
+            }
+            
+                    }
+                    
+            }
+
+    }
+
+     public void Z3MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x + 1, y + 1) &&  sc.GetPosition(x + 1, y + 1) == null &&
+         sc.PositionOnBoard(x + 1, y + 2) && sc.GetPosition(x + 1, y + 2) == null && sc.PositionOnBoard(x + 1, y + 3) &&  sc.GetPosition(x + 1, y + 3) == null  )
+        
+            {
+
+                y= yBoard;
+                    x += 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x, y + i);
+                    if (sc.PositionOnBoard(x, y+i) && sc.GetPosition(x,y+i) != null)
+            {   
+                break;
+            }
+            
+                    }
+                    
+            }
+
+    }
+
+
+     public void Z4MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x + 1, y - 1) &&  sc.GetPosition(x + 1, y - 1) == null &&
+         sc.PositionOnBoard(x + 1, y - 2) && sc.GetPosition(x + 1, y - 2) == null && sc.PositionOnBoard(x + 1, y - 3) && sc.GetPosition(x + 1, y - 3) == null  )
+        
+            {
+
+                    y=yBoard;
+                    x += 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x, y - i);
+                    if (sc.PositionOnBoard(x, y-i) && sc.GetPosition(x,y-i) != null)
+            {   
+                break;
+            }
+            
+                    }
+                    
+            }
+
+    }
+
+     public void Z5MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x - 1, y + 1) &&  sc.GetPosition(x - 1, y + 1) == null &&
+         sc.PositionOnBoard(x - 1, y + 2) && sc.GetPosition(x - 1, y + 2) == null && sc.PositionOnBoard(x - 1, y + 3) &&  sc.GetPosition(x - 1, y + 3) == null  )
+        
+            {
+
+                y= yBoard;
+                    x -= 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x, y + i);
+                    if (sc.PositionOnBoard(x, y+i) && sc.GetPosition(x,y+i) != null)
+            {   
+                break;
+            }
+            
+                    }
+                    
+            }
+
+    }
+
+    public void Z6MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x - 1, y - 1) &&  sc.GetPosition(x - 1, y - 1) == null &&
+         sc.PositionOnBoard(x - 1, y - 2) && sc.GetPosition(x - 1, y - 2) == null && sc.PositionOnBoard(x - 1, y - 3) && sc.GetPosition(x - 1, y - 3) == null  )
+        
+            {
+
+                y=yBoard;
+                    x -= 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x, y - i);
+                    if (sc.PositionOnBoard(x, y-i) && sc.GetPosition(x,y-i) != null)
+            {   
+                break;
+            }
+            
+                    }
+                    
+            }
+
+    }
+
+    
+    public void Z7MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x + 1, y - 1) &&  sc.GetPosition(x + 1, y - 1) == null &&
+         sc.PositionOnBoard(x + 2, y - 1) && sc.GetPosition(x + 2, y - 1) == null && sc.PositionOnBoard(x + 3, y - 1) &&  sc.GetPosition(x + 3, y - 1) == null  )
+        
+            {
+                x = xBoard ;
+                
+                    y -= 1;
+                    for(int i=4; i<11; i++)
+                    {
+                    PointMovePlate(x + i, y);
+                    if (sc.PositionOnBoard(x+i, y) && sc.GetPosition(x+i,y) != null)
+            {   
+                break;
+            }
+            
+                    }
+                    
+            }
+
+    }
+    
+
+     public void Z8MovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xBoard ;
+        int y = yBoard ;
+        if (sc.PositionOnBoard(x - 1, y - 1) &&  sc.GetPosition(x - 1, y - 1) == null &&
+         sc.PositionOnBoard(x - 2, y - 1) && sc.GetPosition(x - 2, y - 1) == null && sc.PositionOnBoard(x - 3, y - 1) &&  sc.GetPosition(x - 3, y - 1) == null  )
+        
+            {
+                x = xBoard ;
+                
+                    y -= 1;
+                    for(int i=4; i<11; i++)
+                    {
+                       
+                    PointMovePlate(x-i, y);
+
+            if (sc.PositionOnBoard(x-i, y) && sc.GetPosition(x-i,y) != null)
+            {   
+                break;
+            }
+                    }
+                    
+            }
+
+    }
+
+
+
+    public void LineMovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+
+        int x = xBoard + xIncrement;
+        int y = yBoard + yIncrement;
+
+        while (sc.PositionOnBoard(x,y) && sc.GetPosition(x,y) == null)
+        {
+            MovePlateSpawn(x,y);
+            x += xIncrement;
+            y += yIncrement;
+        }
+
+        if (sc.PositionOnBoard(x,y) && sc.GetPosition(x,y).GetComponent<Chessman>().player != player)
+        {
+            MovePlateAttackSpawn(x,y);
+        }
+    } 
+
+    public void CLineMovePlate(int xIncrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+
+        int x = xBoard + xIncrement ;
+        int y = yBoard + yIncrement ;
+        if (sc.PositionOnBoard(x,y) && sc.GetPosition(x,y) == null)
+        {   
+            x += xIncrement;
+            y += yIncrement;
+
+        while (sc.PositionOnBoard(x,y) && sc.GetPosition(x,y) == null)
+        {
+            MovePlateSpawn(x,y);
+            x += xIncrement;
+            y += yIncrement;
+        }
+
+        if (sc.PositionOnBoard(x,y) && sc.GetPosition(x,y).GetComponent<Chessman>().player != player)
+        {
+            MovePlateAttackSpawn(x,y);
+        }
+
+        }
+    }  
+
+    public void AMovePlate()
+    {
+        PointMovePlate(xBoard + 1, yBoard + 2);
+        PointMovePlate(xBoard - 1, yBoard + 2);
+        PointMovePlate(xBoard + 1, yBoard - 2);
+        PointMovePlate(xBoard - 1, yBoard - 2);
+        PointMovePlate(xBoard + 2, yBoard + 1);
+        PointMovePlate(xBoard - 2, yBoard + 1);
+        PointMovePlate(xBoard + 2, yBoard - 1);
+        PointMovePlate(xBoard - 2, yBoard - 1);
+    }    
+
+    public void DeMovePlate()
+    {
+        PointMovePlate(xBoard + 1, yBoard + 3);
+        PointMovePlate(xBoard - 1, yBoard + 3);
+        PointMovePlate(xBoard + 1, yBoard - 3);
+        PointMovePlate(xBoard - 1, yBoard - 3);
+        PointMovePlate(xBoard + 3, yBoard + 1);
+        PointMovePlate(xBoard - 3, yBoard + 1);
+        PointMovePlate(xBoard + 3, yBoard - 1);
+        PointMovePlate(xBoard - 3, yBoard - 1);
+    }    
+    
+    public void DMovePlate()
+    {
+        PointMovePlate(xBoard + 0, yBoard - 2);
+        PointMovePlate(xBoard -2, yBoard + 0);
+        PointMovePlate(xBoard + 0, yBoard + 2);
+        PointMovePlate(xBoard +2, yBoard + 0);
+    }
+    
+    public void FMovePlate()
+    {
+        PointMovePlate(xBoard - 2, yBoard - 2);
+        PointMovePlate(xBoard - 2, yBoard + 2);
+        PointMovePlate(xBoard + 2, yBoard - 2);
+        PointMovePlate(xBoard + 2, yBoard + 2);
+    }
+
+    public void GSurroundMovePlate()
+    {
+        PointMovePlate(xBoard - 1, yBoard - 1);
+        PointMovePlate(xBoard - 1, yBoard + 1);
+        PointMovePlate(xBoard + 1, yBoard - 1);
+        PointMovePlate(xBoard + 1, yBoard + 1);
+    }
+
+    public void WSSurroundMovePlate()
+    {
+        WSPointMovePlate(xBoard, yBoard + 1);
+        WSPointMovePlate(xBoard, yBoard - 1);
+        WSPointMovePlate(xBoard - 1, yBoard - 1);
+        WSPointMovePlate(xBoard - 1, yBoard);
+        WSPointMovePlate(xBoard - 1, yBoard + 1);
+        WSPointMovePlate(xBoard + 1, yBoard - 1);
+        WSPointMovePlate(xBoard + 1, yBoard);
+        WSPointMovePlate(xBoard + 1, yBoard + 1);
+    }
+
+    public void BSSurroundMovePlate()
+    {
+        BSPointMovePlate(xBoard, yBoard + 1);
+        BSPointMovePlate(xBoard, yBoard - 1);
+        BSPointMovePlate(xBoard - 1, yBoard - 1);
+        BSPointMovePlate(xBoard - 1, yBoard);
+        BSPointMovePlate(xBoard - 1, yBoard + 1);
+        BSPointMovePlate(xBoard + 1, yBoard - 1);
+        BSPointMovePlate(xBoard + 1, yBoard);
+        BSPointMovePlate(xBoard + 1, yBoard + 1);
+    }
+
+    public void VSurroundMovePlate()
+    {
+        PointMovePlate(xBoard + 0, yBoard + 1);
+        PointMovePlate(xBoard + 0, yBoard - 1);
+        PointMovePlate(xBoard - 1, yBoard + 0);
+        PointMovePlate(xBoard + 1, yBoard + 0);
+        
+    }
+    // for zurafa
+    public void ZPointMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x,y))
+        {
+            GameObject cp = sc.GetPosition(x,y);
+            if (cp == null)
+            {
+                MovePlateSpawn(x,y);
+            }else if (cp.GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x,y);
+                
+            }
+        }
+    }
+    
+
+
+    public void PointMovePlate(int x, int y)
+    {
+        
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x,y))
+        {
+            GameObject cp = sc.GetPosition(x,y);
+            if (cp == null)
+            {
+                MovePlateSpawn(x,y);
+            }else if (cp.GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x,y);
+            }
+        }
+    }
+
+    public void WSPointMovePlate(int x, int y)
+    {
+        
+        Game sc = controller.GetComponent<Game>();
+        if(x==12 && y==1)
+        {
+        if(sc.PositionOnBoardSah(x, y))
+        {
+            GameObject cp = sc.GetPosition(x,y);
+            if (cp == null)
+            {
+                MovePlateSpawn(x,y);
+            }else if (cp.GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x,y);
+            }
+        }
+        }
+        if (sc.PositionOnBoard(x,y))
+        {
+            GameObject cp = sc.GetPosition(x,y);
+            if (cp == null)
+            {
+                MovePlateSpawn(x,y);
+            }else if (cp.GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x,y);
+            }
+        }
+    }
+    public void BSPointMovePlate(int x, int y)
+    {
+        
+        Game sc = controller.GetComponent<Game>();
+        if(x==0 && y==8)
+        {
+        if(sc.PositionOnBoardSah(x, y))
+        {
+            GameObject cp = sc.GetPosition(x,y);
+            if (cp == null)
+            {
+                MovePlateSpawn(x,y);
+            }else if (cp.GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x,y);
+            }
+        }
+        }
+        if (sc.PositionOnBoard(x,y))
+        {
+            GameObject cp = sc.GetPosition(x,y);
+            if (cp == null)
+            {
+                MovePlateSpawn(x,y);
+            }else if (cp.GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x,y);
+            }
+        }
+    }
+    
+
+    
+
+    
+    
+
+    public void APawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y - 1) )
+            {
+                if(sc.GetPosition(x, y) == null)
+                {
+                    MovePlateSpawn(x, y);
+                }
+            }
+
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    
+
+    public void CPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void DPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void DePawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void FPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void GPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void KPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void PPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void SPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void VPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void ZPawnMovePlate(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        if (sc.PositionOnBoard(x, y))
+        {
+            if (sc.GetPosition(x, y) == null)
+            {
+                MovePlateSpawn(x, y);
+            }
+
+            if (sc.PositionOnBoard(x + 1, y) && sc.GetPosition(x + 1, y) != null && sc.GetPosition(x + 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x + 1, y);
+            }
+
+            if (sc.PositionOnBoard(x - 1, y) && sc.GetPosition(x - 1, y) != null && sc.GetPosition(x - 1, y).GetComponent<Chessman>().player != player)
+            {
+                MovePlateAttackSpawn(x - 1, y);
+            }
+        }
+    }
+
+    public void MovePlateSpawn(int matrixX, int matrixY) // Hareket saglar.
+    {
+        float x = matrixX;
+        float y = matrixY;
+
+        x *= 0.982f;
+        y *= 0.98f;
+
+        x += -5.91f;
+        y += -4.41f;
+        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.1f), Quaternion.identity);
+
+        MovePlate mpScript = mp.GetComponent<MovePlate>();
+        mpScript.SetReference(gameObject);
+        mpScript.SetCoords(matrixX, matrixY);
+        
+        
+    }
+
+    public void MovePlateAttackSpawn(int matrixX, int matrixY) // Yiyerek hareketi saglar.
+    {
+        float x = matrixX;
+        float y = matrixY;
+
+        x *= 0.982f;
+        y *= 0.98f; 
+
+        x += -5.91f;
+        y += -4.41f;
+
+        GameObject mp = Instantiate(movePlate, new Vector3(x, y, -3.1f), Quaternion.identity);
+
+        MovePlate mpScript = mp.GetComponent<MovePlate>();
+        mpScript.attack = true;
+        mpScript.SetReference(gameObject);
+        mpScript.SetCoords(matrixX, matrixY);
+    }
+}

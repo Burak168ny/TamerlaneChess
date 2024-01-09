@@ -1,0 +1,253 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MovePlate : MonoBehaviour
+{
+    public GameObject controller;
+
+    GameObject reference = null;
+
+    int matrixX;
+    int matrixY;
+
+    public bool attack = false;
+    public void Start()
+    {
+        if (attack) // saldiri hareket plaksini kirmizi yapar.
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+    }
+
+    
+private bool IsLastKingb(string _b_sah)
+{
+    GameObject[] kings = GameObject.FindGameObjectsWithTag("minions"); 
+    int kingCount = 0;
+
+    foreach (GameObject king in kings)
+    {
+        if (king.name == _b_sah)
+        {
+            kingCount++;
+        }
+    }
+
+    return kingCount == 1;
+}
+
+private bool IsLastKingw(string _w_sah)
+{
+    GameObject[] kings = GameObject.FindGameObjectsWithTag("minions"); 
+    
+        int kingCount = 0;
+
+    foreach (GameObject king in kings)
+    {
+        if (king.name == _w_sah)
+        {
+            kingCount++;
+        }
+    }
+
+    return kingCount == 1;
+}
+
+
+    public void OnMouseUp()
+{
+    
+    controller = GameObject.FindGameObjectWithTag("GameController");
+    
+    if (attack) 
+    {
+        GameObject cp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
+
+        if(cp.name == "_w_sah")
+        {
+        if(IsLastKingw("_w_sah"))
+        {
+                controller.GetComponent<Game>().Winner("black");
+        }
+        }
+        if(cp.name == "_b_sah")
+        {
+        if(IsLastKingb("_b_sah"))
+        {
+                controller.GetComponent<Game>().Winner("white");
+        }
+        }
+        
+
+        Destroy(cp);
+}
+        
+
+
+
+
+
+        controller.GetComponent<Game>().SetPositionEmpty(reference.GetComponent<Chessman>().GetXBoard(), reference.GetComponent<Chessman>().GetYBoard());
+
+        reference.GetComponent<Chessman>().SetXBoard(matrixX);
+        reference.GetComponent<Chessman>().SetYBoard(matrixY);
+        reference.GetComponent<Chessman>().SetCoords();
+
+        controller.GetComponent<Game>().SetPosition(reference); 
+        
+        
+        GameObject amp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
+        Game sc = controller.GetComponent<Game>();
+        
+        if( amp.name == "w_piyon_at" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_at",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_casus" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_casus",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_debbabe" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_debbabe",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_deve" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_deve",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_fil" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_fil",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_general" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_general",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_kale" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_kale",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_sah" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_sah",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_vezir" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_vezir",matrixX,matrixY));
+        }
+
+        if( amp.name == "w_piyon_zurafa" && !sc.PositionOnBoard(matrixX,matrixY - 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_w_zurafa",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_at" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_at",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_casus" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_casus",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_debbabe" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_debbabe",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_deve" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_deve",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_fil" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_fil",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_general" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_general",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_kale" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_kale",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_sah" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_sah",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_vezir" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_vezir",matrixX,matrixY));
+        }
+
+        if( amp.name == "b_piyon_zurafa" && !sc.PositionOnBoard(matrixX,matrixY + 1)){
+        Destroy(amp); 
+        sc.SetPosition(sc.Create("_b_zurafa",matrixX,matrixY));
+        }
+
+        if( amp.name == "_b_sah" )
+        {
+            GameObject cp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
+
+        
+        int x = matrixX;
+        int y = matrixY;
+
+        if(x == 0 && y == 8)
+        {
+            controller.GetComponent<Game>().Draw("Draw!");
+        }
+        }
+        if( amp.name == "_w_sah" )
+        {
+            GameObject cp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
+
+        
+        int x = matrixX;
+        int y = matrixY;
+
+        if(x == 12 && y == 1)
+        {
+            controller.GetComponent<Game>().Draw("Draw!");
+        }
+        }
+
+        
+
+        controller.GetComponent<Game>().NextTurn(); // Oyuncu hamle yapinca diger oyuncuya gecer.
+
+        reference.GetComponent<Chessman>().DestroyMovePlates(); // Tas yeme
+    }
+    
+    public void SetCoords(int x, int y)
+    {
+        matrixX = x;
+        matrixY = y;
+    }
+
+    public void SetReference(GameObject obj)
+    {
+        reference = obj;
+    }
+
+    public GameObject GetReference()
+    {
+        return reference;
+    }
+}
+

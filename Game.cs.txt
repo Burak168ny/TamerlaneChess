@@ -1,0 +1,140 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class Game : MonoBehaviour
+{
+    public GameObject chesspiece;
+    public GameObject board;
+
+    
+    private GameObject[,] positions = new GameObject[13,10]; 
+    private GameObject[] playerBlack = new GameObject[28];
+    private GameObject[] playerWhite = new GameObject[28];
+
+    private string currentPlayer = "white";
+    private bool gameOver = false;
+    // Taslari diz.
+    void Start()
+    {
+        
+        playerWhite = new GameObject[] {
+            Create("_w_fil",1,9),Create("_w_deve",3,9),Create("_w_debbabe",5,9),Create("_w_debbabe",7,9),Create("_w_deve",9,9),Create("_w_fil",11,9),
+            Create("_w_kale",1,8),Create("_w_at",2,8),Create("_w_casus",3,8),Create("_w_zurafa",4,8),Create("_w_general",5,8),Create("_w_sah",6,8),Create("_w_vezir",7,8),Create("_w_zurafa",8,8),Create("_w_casus",9,8),
+            Create("_w_at",10,8),Create("_w_kale",11,8),
+
+            Create("w_piyon_piyon",1,7),Create("w_piyon_debbabe",2,7),Create("w_piyon_deve",3,7),Create("w_piyon_fil",4,7),Create("w_piyon_general",5,7),Create("w_piyon_sah",6,7),Create("w_piyon_vezir",7,7),
+            Create("w_piyon_zurafa",8,7),Create("w_piyon_casus",9,7),Create("w_piyon_at",10,7),Create("w_piyon_kale",11,7)};
+        
+        playerBlack = new GameObject[] {
+            Create("_b_fil",1,0),Create("_b_deve",3,0),Create("_b_debbabe",5,0),Create("_b_debbabe",7,0),Create("_b_deve",9,0),Create("_b_fil",11,0),
+            Create("_b_kale",1,1),Create("_b_at",2,1),Create("_b_casus",3,1),Create("_b_zurafa",4,1),Create("_b_general",5,1),Create("_b_sah",6,1),Create("_b_vezir",7,1),Create("_b_zurafa",8,1),Create("_b_casus",9,1),
+            Create("_b_at",10,1),Create("_b_kale",11,1),
+
+            Create("b_piyon_piyon",1,2),Create("b_piyon_debbabe",2,2),Create("b_piyon_deve",3,2),Create("b_piyon_fil",4,2),Create("b_piyon_general",5,2),Create("b_piyon_sah",6,2),Create("b_piyon_vezir",7,2),
+            Create("b_piyon_zurafa",8,2),Create("b_piyon_casus",9,2),Create("b_piyon_at",10,2),Create("b_piyon_kale",11,2)};
+
+            
+        for (int i = 0; i < playerBlack.Length; i++)
+        {
+            SetPosition(playerBlack[i]);
+            SetPosition(playerWhite[i]);
+        }
+    }
+
+    public GameObject Create(string name, int x, int y) // Oyun nesnesi olusturur. Kordinat verir. (Chessman de kodinatlari degisecek.)
+    {
+        GameObject obj = Instantiate(chesspiece, new Vector3(0, 0, 0), Quaternion.identity);
+        Chessman cm = obj.GetComponent<Chessman>();
+        cm.name = name;
+        cm.SetXBoard(x);
+        cm.SetYBoard(y);
+        cm.Activate();
+        return obj;
+    }
+    
+
+    public void SetPosition(GameObject obj) // Chessman dan gelen kordinati positionsa atar.
+    {
+        Chessman cm = obj.GetComponent<Chessman>();
+
+        positions[cm.GetXBoard(), cm.GetYBoard()] = obj;
+        
+    }
+
+    public void SetPositionEmpty(int x, int y) // Koordinatlarindaki oyun alanindaki konumu bosaltir. 
+    {
+        positions[x, y] = null;
+    }
+
+    public GameObject GetPosition(int x, int y) // GameObject den gelen kordinatlari dondurur.
+    {
+        return positions[x, y];
+    }
+        
+    public bool PositionOnBoard(int x, int y) // Tahtada
+    {
+        if(x < 0 || y < 0 || x >= positions.GetLength(0) || y >= positions.GetLength(1)  || x == 12 || x == 0) return false;
+        return true;
+        
+    }
+    public bool PositionOnBoardSah(int x, int y) // Tahtada
+    {
+        if(x < 0 || y < 0 || x >= positions.GetLength(0) || y >= positions.GetLength(1)  ) return false;
+        return true;
+        
+    }
+
+    public string GetCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    public bool IsGameOver()
+    {
+        return gameOver;
+    }
+
+    public void NextTurn() // Oyuncu hamle yapinca diger oyuncuya gecer.
+    {
+        if (currentPlayer == "white")
+        {
+            currentPlayer = "black";
+        }else
+        {
+            currentPlayer = "white";
+        }
+    }
+    
+
+    public void Update() //  Oyunun bitince kullanicinin oyunu yeniden baslatmasini saglar.
+    {
+        if(gameOver == true && Input.GetMouseButtonDown(0))
+        {
+            gameOver = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+    
+    public void Winner(string playerWinner) // Kazanan olunca sonucu belli edecek WinnerText veya RestartText i aciga cikarir.
+    {
+        gameOver = true;
+        
+        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().text = playerWinner + " is winner! " ;
+        GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().text = " Restart! " ;
+    }
+    public void Draw(string Draw)
+    {
+        gameOver = true;
+
+        GameObject.FindGameObjectWithTag("DrawText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("DrawText").GetComponent<Text>().text = Draw ;
+        GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().text = " Restart! " ;
+    }
+
+}
